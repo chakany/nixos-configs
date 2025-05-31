@@ -5,6 +5,8 @@
   services.xserver.displayManager.gdm.enable = true;
   services.xserver.desktopManager.gnome.enable = true;
 
+  programs.hyprland.enable = true;
+
   # Configure X11 keymap
   services.xserver.xkb = {
     layout = "us";

@@ -7,11 +7,14 @@
     nixvim.url = "github:nix-community/nixvim";
     nixvim.inputs.nixpkgs.follows = "nixpkgs";
 
-    home-manager.url = "github:nix-community/home-manager/release-24.11";
+    home-manager.url = "github:nix-community/home-manager/master";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
+
+    superfreq.url = "github:NotAShelf/watt";
+    superfreq.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  outputs = inputs @ { self, nixpkgs, home-manager, ... }: {
+  outputs = inputs @ { self, nixpkgs, home-manager, superfreq, ... }: {
     nixosConfigurations = {
       jawnson = let
         username = "jack";
@@ -24,11 +27,13 @@
           modules = [
             ./hosts/jawnson
             ./users/${username}/nixos.nix
+            superfreq.nixosModules.default
 
             home-manager.nixosModules.home-manager
             {
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
+	      home-manager.backupFileExtension = "backup";
 
               home-manager.extraSpecialArgs = inputs // specialArgs;
               home-manager.users.${username} = import ./users/${username}/home.nix;

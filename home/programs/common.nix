@@ -6,14 +6,21 @@
     discord
     filezilla
     jetbrains.datagrip
-    (vscode-with-extensions.override {
-      vscodeExtensions = with vscode-extensions; [
-        bbenoist.nix
-      ];
-    })
     orca-slicer
     ripgrep
+    android-studio
+    libreoffice-fresh
+    goose-cli
+    cachix
+    moonlight-qt
   ];
+
+  programs.vscode = {
+    enable = true;
+    enableUpdateCheck = false; # Disable VSCode self-update and let Home Manager to manage VSCode versions instead.
+    enableExtensionUpdateCheck = false; # Disable extensions auto-update and let nix4vscode manage updates and extensions
+    package = pkgs.vscode.fhs;
+  };
 
   programs.ghostty = {
     enable = true;
