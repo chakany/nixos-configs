@@ -11,11 +11,16 @@
 
   wayland.windowManager.hyprland.settings = {
     "$mod" = "SUPER";
+    monitor = [
+      "desc:AU Optronics 0x583D,preferred,0x0,1"
+      "desc:ASUSTek COMPUTER INC VG248 N3LMQS092193,preferred,0x-1080,1"
+      "desc:LG Electronics LG ULTRAWIDE 0x0006A185,preferred,0x-2160,1"
+    ];
     bind =
       [
         "$mod, Q, exec, ghostty"
         "$mod, W, exec, google-chrome"
-	"$mod, space, exec, fuzzel"
+	      "$mod, space, exec, fuzzel"
       ]
       ++ (
         # workspaces
