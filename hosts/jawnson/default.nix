@@ -6,6 +6,7 @@
     ./hardware-configuration.nix
   ];
 
+  boot.plymouth.enable = true;
   # services.power-profiles-daemon.enable = false;
   # services.superfreq = {   
   #   enable = true;
@@ -54,6 +55,11 @@
   ];
 
   virtualisation.libvirtd.enable = true;
+
+  programs.virt-manager.enable = true;
+  users.groups.libvirtd.members = [ username ];
+  virtualisation.spiceUSBRedirection.enable = true;
+  
   virtualisation.waydroid.enable = true;
   boot.kernelModules = [ "kvm-intel" ];
 
@@ -126,7 +132,9 @@
   users.users.${username} = {
     packages = with pkgs; [
       gnomeExtensions.dash-to-dock
+      gnomeExtensions.appindicator
       gnome-tweaks
+      kdePackages.kdenlive
     ];
   };
 

@@ -10,7 +10,7 @@
     home-manager.url = "github:nix-community/home-manager/master";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
-    superfreq.url = "github:NotAShelf/watt";
+    superfreq.url = "github:chakany/watt/fix/power-detection-logic";
     superfreq.inputs.nixpkgs.follows = "nixpkgs";
   };
 

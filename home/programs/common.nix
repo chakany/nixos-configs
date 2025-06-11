@@ -13,6 +13,8 @@
     goose-cli
     cachix
     moonlight-qt
+    jetbrains.idea-ultimate
+    devenv
   ];
 
   programs.vscode = {
