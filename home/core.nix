@@ -1,11 +1,15 @@
-{ nixvim, username, ... }: {
+{ pkgs, nixvim, ... }: {
   imports = [
     nixvim.homeManagerModules.nixvim
   ];
 
   home = {
-    inherit username;
-    homeDirectory = "/home/${username}";
+    packages = with pkgs; [
+      ripgrep
+      goose-cli
+      cachix
+      devenv
+    ];
 
     stateVersion = "24.11";
   };

@@ -1,58 +1,41 @@
-{ config, pkgs, lib, username, superfreq, ... }: {
+{ config, pkgs, lib, ... }: {
   imports = [
-    ../../modules/system.nix
     ../../modules/hyprland.nix
     ../../modules/displaylink.nix
+    ../../modules/superfreq.nix
     ./hardware-configuration.nix
   ];
 
-  boot.plymouth.enable = true;
-  services.power-profiles-daemon.enable = false;
-  services.superfreq = {   
-    enable = true;
-    settings = {
-      battery = {
-        governor = "powersave";
-        turbo = "auto";
-        enable_auto_turbo = true;
-        turbo_auto_settings = {
-          load_threshold_high = 80.0;
-          load_threshold_low = 40.0;
-          temp_threshold_high = 70.0;
-          initial_turbo_state = false;
-        };
-        epp = "power";
-        epb = "balance_power";
-        platform_profile = "balanced";
-      };
-      charger = {
-        governor = "performance";
-        turbo = "auto";
-        enable_auto_turbo = true;
-        turbo_auto_settings = {
-          load_threshold_high = 70.0;
-          load_threshold_low = 30.0;
-          temp_threshold_high = 75.0;
-          initial_turbo_state = false;
-        };
-        epp = "performance";
-        epb = "balance_performance";
-        platform_profile = "performance";
-      };
-      daemon = {
-        poll_inverval_sec = 5;
-        adaptive_interval = true;
-        min_poll_interval_sec = 1;
-        max_poll_interval_sec = 30;
-        throttle_on_battery = true;
-      };
-    };
+  # Set your time zone.
+  time.timeZone = "America/New_York";
+
+  # Select internationalisation properties.
+  i18n.defaultLocale = "en_US.UTF-8";
+
+  i18n.extraLocaleSettings = {
+    LC_ADDRESS = "en_US.UTF-8";
+    LC_IDENTIFICATION = "en_US.UTF-8";
+    LC_MEASUREMENT = "en_US.UTF-8";
+    LC_MONETARY = "en_US.UTF-8";
+    LC_NAME = "en_US.UTF-8";
+    LC_NUMERIC = "en_US.UTF-8";
+    LC_PAPER = "en_US.UTF-8";
+    LC_TELEPHONE = "en_US.UTF-8";
+    LC_TIME = "en_US.UTF-8";
   };
+
+  boot.plymouth.enable = true;
 
   hardware.firmware = [
     pkgs.sof-firmware
     pkgs.alsa-firmware
   ];
+  
+  nix.gc = {
+    automatic = true;
+    dates = "weekly";
+    options = "--delete-older-than 7d";
+  };
 
   virtualisation.libvirtd.enable = true;
   # i have no idea what this does, but on each rebuild the location of firmware
@@ -60,7 +43,7 @@
   virtualisation.libvirtd.qemu.ovmf.enable = true;
  
   programs.virt-manager.enable = true;
-  users.groups.libvirtd.members = [ username ];
+  users.groups.libvirtd.members = [ "jack" ];
   virtualisation.spiceUSBRedirection.enable = true;
   
   virtualisation.waydroid.enable = true;
@@ -132,7 +115,8 @@
   };
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
-  users.users.${username} = {
+  users.users.jack = {
+    extraGroups = [ "networkmanager" "wheel" "kvm" "adbusers" ];
     packages = with pkgs; [
       gnomeExtensions.dash-to-dock
       gnomeExtensions.appindicator
@@ -140,6 +124,7 @@
       kdePackages.kdenlive
     ];
   };
+  nix.settings.trusted-users = ["jack"];
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
