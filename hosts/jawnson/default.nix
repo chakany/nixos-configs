@@ -6,6 +6,8 @@
     ./hardware-configuration.nix
   ];
 
+  nixpkgs.config.allowUnfree = true; # FUCK
+  
   # Set your time zone.
   time.timeZone = "America/New_York";
 

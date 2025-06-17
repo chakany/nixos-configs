@@ -39,8 +39,7 @@
 
               modules = [
                 ./users/jack/home.nix
-		./hosts/laptop.nix
-                ./home/core.nix
+		            ./hosts/laptop.nix
               ];
 
               extraSpecialArgs = inputs;
@@ -53,7 +52,6 @@
               inherit pkgs;
               modules = [
                 ./users/deck.nix
-                ./home/core.nix
               ];
 
               extraSpecialArgs = inputs;
@@ -66,15 +64,15 @@
 
               modules = [
                 ./hosts/jawnson
-                ./users/jack/home.nix
                 ./users/jack/nixos.nix
+                inputs.superfreq.nixosModules.default
 
                 home-manager.nixosModules.home-manager
                 {
                   home-manager.useGlobalPkgs = true;
                   home-manager.useUserPackages = true;
                   home-manager.extraSpecialArgs = inputs;
-                  home-manager.users.jack = import ./home/core.nix;
+                  home-manager.users.jack = import ./users/jack/home.nix;
                 }
               ];
             };

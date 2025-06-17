@@ -1,8 +1,4 @@
-{ superfreq, ... }: {
-  imports = [
-    superfreq.nixosModules.default
-  ];
-
+{
   services.power-profiles-daemon.enable = false;
   services.superfreq = {   
     enable = true;
