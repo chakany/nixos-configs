@@ -45,6 +45,8 @@
   programs.virt-manager.enable = true;
   users.groups.libvirtd.members = [ "jack" ];
   virtualisation.spiceUSBRedirection.enable = true;
+  virtualisation.virtualbox.host.enable = true;
+  users.extraGroups.vboxusers.members = [ "jack" ];
   
   virtualisation.waydroid.enable = true;
   boot.kernelModules = [ "kvm-intel" ];
